@@ -44,7 +44,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 
 artifacts {
     archives sourcesJar
-    archives javadocJar
+//    archives javadocJar
 }
 
 // uncomment to build a jar file in addition to the default aar file
