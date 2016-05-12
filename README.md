@@ -14,6 +14,6 @@ Step 2. Add the dependency
 
 ```gradle
 dependencies {
-	    compile 'com.github.aucd29:ani:1.0.2'
+	    compile 'com.github.aucd29:ani:1.0.1'
 }
 ```
