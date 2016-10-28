@@ -1,4 +1,5 @@
 # ani
+[![Build Status](https://travis-ci.org/aucd29/ani.svg?branch=master)](https://travis-ci.org/aucd29/ani)
 
 Add it to your build.gradle with:
 ```gradle
