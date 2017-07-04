@@ -20,7 +20,6 @@ package net.sarangnamu.common.ani;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
@@ -56,10 +55,11 @@ public class FadeStatusBar {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                window.setStatusBarColor((int) animation.getAnimatedValue());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.setStatusBarColor((int) animation.getAnimatedValue());
+                }
             }
         });
 
