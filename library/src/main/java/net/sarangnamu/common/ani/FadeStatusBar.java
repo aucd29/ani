@@ -21,6 +21,7 @@ package net.sarangnamu.common.ani;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -44,8 +45,9 @@ public class FadeStatusBar {
             return ;
         }
 
-        int colorFrom = window.getContext().getResources().getColor(fColor, null);
-        int colorTo   = window.getContext().getResources().getColor(sColor, null);
+        // https://stackoverflow.com/questions/32643596/i-upgraded-android-from-targetsdk-22-to-23-and-im-getting-a-nosuchmethoderror
+        int colorFrom = ContextCompat.getColor(window.getContext(), fColor);
+        int colorTo   = ContextCompat.getColor(window.getContext(), sColor);
 
         ValueAnimator anim = ValueAnimator.ofArgb(colorFrom, colorTo);
 
