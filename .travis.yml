@@ -4,19 +4,27 @@ language: android
 jdk: oraclejdk8
 sudo: required
 
+env:
+  global:
+    - API_LEVEL=25
+    - BUILD_TOOL=25.0.0
+    - ABI=google_apis/armeabi-v7a
+
 android:
   components:
     - tools
     - platform-tools
-    - build-tools-25.0.0
-    - android-25
-    - extra-android-m2repository
+    - build-tools-$BUILD_TOOL
+    - android-$API_LEVEL
+    - addon-google_apis-google-$API_LEVEL
     - extra-google-google_play_services
+    - extra-android-support
+    - extra-android-m2repository
     - extra-google-m2repository
-    - sys-img-armeabi-v7a-android-22
+    - sys-img-armeabi-v7a-addon-google_apis-google-$API_LEVEL
 
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-$API_LEVEL --abi $ABI
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
