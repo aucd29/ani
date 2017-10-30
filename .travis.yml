@@ -6,9 +6,9 @@ sudo: required
 
 env:
   global:
-    - API_LEVEL=25
+    - API_LEVEL=23
     - EMUL_LEVEL=21
-    - BUILD_TOOL=25.0.0
+    - BUILD_TOOL=23.0.2
     - ABI=armeabi-v7a
     - TAG=google_apis
 
@@ -25,7 +25,6 @@ android:
     - extra-android-support
     - extra-android-m2repository
     - extra-google-m2repository
-#    - sys-img-$ABI-android-$API_LEVEL
     - sys-img-armeabi-v7a-google_apis-$API_LEVEL
     - sys-img-armeabi-v7a-google_apis-$EMUL_LEVEL
 
