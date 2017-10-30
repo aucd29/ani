@@ -26,9 +26,9 @@ android:
     #- sys-img-armeabi-v7a-addon-google_apis-google-$API_LEVEL
 
 script:
-  - android list targets
   #- echo no | android create avd --force -n test -t android-$API_LEVEL --abi $ABI -no-accel
-  - echo no | android create avd --force -n test -t android-25 -no-accel
+  - echo no | android create avd --force -n test -t android-25 -b default/x86 -no-accel
+  - android list target
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
