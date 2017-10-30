@@ -7,9 +7,10 @@ sudo: required
 env:
   global:
     - API_LEVEL=25
+    - EMUL_LEVEL=21
     - BUILD_TOOL=25.0.0
-    - ABI=x86
-    #- ABI=google_apis/armeabi-v7a
+    - ABI=armeabi-v7a
+    - TAG=google_apis
 
 android:
   components:
@@ -17,19 +18,21 @@ android:
     - platform-tools
     - build-tools-$BUILD_TOOL
     - android-$API_LEVEL
+    - andorid-$EMUL_LEVEL
     - addon-google_apis-google-$API_LEVEL
+    - addon-google_apis-google-$EMUL_LEVEL
     - extra-google-google_play_services
     - extra-android-support
     - extra-android-m2repository
     - extra-google-m2repository
-    - sys-img-$ABI-android-$API_LEVEL
-    #- sys-img-armeabi-v7a-addon-google_apis-google-$API_LEVEL
+#    - sys-img-$ABI-android-$API_LEVEL
+    - sys-img-armeabi-v7a-google_apis-$API_LEVEL
+    - sys-img-armeabi-v7a-google_apis-$EMUL_LEVEL
 
-script:
-  #- echo no | android create avd --force -n test -t android-$API_LEVEL --abi $ABI -no-accel
-  - echo no | android create avd --force -n test -t android-25 -b default/x86 -no-accel
-  - android list target
+before_script:
+  - echo no | android create avd --force -n test -t "android-"$EMUL_LEVEL --abi $ABI --tag $TAG
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
-  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-  - ./gradlew installDebug
+
+script:
+  - ./gradlew clean check connectedCheck 
