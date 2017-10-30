@@ -1,37 +1,35 @@
-# https://docs.travis-ci.com/user/languages/android/
-
 language: android
 jdk: oraclejdk8
-sudo: required
+# Use the Travis Container-Based Infrastructure
+sudo: false
+
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/gradle/caches/
+    - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
 
 env:
   global:
-    - API_LEVEL=23
-    - EMUL_LEVEL=21
-    - BUILD_TOOL=23.0.2
-    - ABI=armeabi-v7a
-    - TAG=google_apis
+    - ANDROID_API_LEVEL=25
+    - ANDROID_BUILD_TOOLS_VERSION=25.0.1
 
 android:
   components:
-    - tools
+    - tools # to get the new `repository-11.xml`
     - platform-tools
-    - build-tools-$BUILD_TOOL
-    - android-$API_LEVEL
-    - andorid-$EMUL_LEVEL
-    - addon-google_apis-google-$API_LEVEL
-    - addon-google_apis-google-$EMUL_LEVEL
+    - tools # to install Android SDK tools 25.1.x
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - android-$ANDROID_API_LEVEL
+    # For Google APIs
+    - addon-google_apis-google-$ANDROID_API_LEVEL
+    # Google Play Services
     - extra-google-google_play_services
+    # Support library
     - extra-android-support
-    - extra-android-m2repository
+    # Latest artifacts in local repository
     - extra-google-m2repository
-    - sys-img-armeabi-v7a-google_apis-$API_LEVEL
-    - sys-img-armeabi-v7a-google_apis-$EMUL_LEVEL
-
-before_script:
-  - echo no | android create avd --force -n test -t "android-"$EMUL_LEVEL --abi $ABI --tag $TAG
-  - emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
+    - extra-android-m2repository
 
 script:
-  - ./gradlew clean check connectedCheck 
+  - ./gradlew clean assembleDebug
+# -x library:signArchives -PdisablePreDex
